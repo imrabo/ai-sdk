@@ -14,6 +14,10 @@ Automated steps that may be implemented later:
 - GitHub Actions release workflow to build and upload wheels and sdists on tag
 - Automated CHANGELOG generation from merge commits (optional)
 
+GitHub Actions release workflow behavior
+- On push of a tag matching `v*.*.*` the workflow will build distributions and **create a draft GitHub Release** with the `dist/` artifacts attached.
+- The workflow will only upload to PyPI automatically if the repository secret `PYPI_API_TOKEN` is set. If the secret is not present, the PyPI upload is skipped and a draft GitHub Release with artifacts is still created.
+
 Notes:
 - Releases must be additive for v1 (no breaking changes). Any breaking change must be v2.
 - Ensure LICENSE file is included in distribution.

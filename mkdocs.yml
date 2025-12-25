@@ -1,0 +1,27 @@
+site_name: imrabo AI SDK
+site_description: 'Provider-agnostic AI SDK — docs'
+site_author: ImRabo
+repo_name: imrabo/imrabo-ai-sdk
+repo_url: https://github.com/imrabo/imrabo-ai-sdk
+edit_uri: edit/main/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+  features:
+    - navigation.instant
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Usage: usage.md
+  - API Contract: sdk_contract.md
+  - Provider Adapters: provider_adapters.md
+  - Principles: sdk_principles.md
+  - Contributing: contributing.md
+
+plugins:
+  - search

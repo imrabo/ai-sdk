@@ -1,0 +1,14 @@
+[project]
+name = "imrabo-ai-sdk"
+version = "0.1.0"
+description = "imrabo AI SDK — provider-agnostic invocation layer (Python)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "ImRabo" }]
+keywords = ["ai", "sdk", "models", "inference"]
+
+dependencies = ["httpx>=0.24.0"]
+
+[tool.pytest]
+addopts = ["-q"]

@@ -31,8 +31,17 @@ Publishing to PyPI via "Release published"
   - It builds `dist/` and uploads the distributions to a job-scoped artifact.
   - It then downloads those artifacts in a separate job and uses `pypa/gh-action-pypi-publish` to publish the package to PyPI.
   - The `pypi` environment is configured for the publishing job; we recommend protecting that environment and requiring approvals before allowing the job to run.
-  - The action will use the `PYPI_API_TOKEN` repository secret when present. Create a PyPI API token on https://pypi.org and add it as a repository secret `PYPI_API_TOKEN`.
+  - The workflow will **fail early with a clear error** if the environment secret `PYPI_API_TOKEN` is not configured — this prevents silent publish attempts.
 
+How to create the protected `pypi` environment and add the token
+1. Go to your repository → Settings → Environments → New environment, and create an environment named `pypi`.
+2. Under the `pypi` environment, add a new secret named `PYPI_API_TOKEN` with the value of your PyPI API token (create one at https://pypi.org/ if you don't have one).
+3. Configure environment protection rules (optional but recommended): require reviewers or approvals before deployment.
+4. When you publish a GitHub Release and the job reaches the `pypi` environment, an approval will be required; after approval the workflow will use the `PYPI_API_TOKEN` secret to publish the package.
+
+Notes:
+- Releases must be additive for v1 (no breaking changes). Any breaking change must be v2.
+- Ensure LICENSE file is included in distribution.
 Notes:
 - Releases must be additive for v1 (no breaking changes). Any breaking change must be v2.
 - Ensure LICENSE file is included in distribution.

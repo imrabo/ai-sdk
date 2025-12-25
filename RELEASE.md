@@ -18,6 +18,13 @@ GitHub Actions release workflow behavior
 - On push of a tag matching `v*.*.*` the workflow will build distributions and **create a draft GitHub Release** with the `dist/` artifacts attached.
 - The workflow will only upload to PyPI automatically if the repository secret `PYPI_API_TOKEN` is set. If the secret is not present, the PyPI upload is skipped and a draft GitHub Release with artifacts is still created.
 
+Troubleshooting GitHub Pages / docs deploy
+- If the docs workflow fails with `Permission to <owner>/<repo>.git denied to github-actions[bot]`:
+  - Ensure the docs workflow has `permissions: contents: write` and `pages: write` (we set this in `.github/workflows/docs.yml`).
+  - Make sure `actions/checkout` uses `persist-credentials: true` (the workflow now sets this) so the `GITHUB_TOKEN` can push commits.
+  - If you have branch protection rules on `gh-pages`, allow GitHub Actions to push to protected branches or use a different publishing strategy (e.g., publish via a deploy key or a personal token).
+- If the workflow fails with `Version 3.1 was not found` from `actions/setup-python`: pin a concrete Python minor version like `3.11` in the workflow (we now use `3.11`).
+
 Notes:
 - Releases must be additive for v1 (no breaking changes). Any breaking change must be v2.
 - Ensure LICENSE file is included in distribution.

@@ -25,6 +25,14 @@ Troubleshooting GitHub Pages / docs deploy
   - If you have branch protection rules on `gh-pages`, allow GitHub Actions to push to protected branches or use a different publishing strategy (e.g., publish via a deploy key or a personal token).
 - If the workflow fails with `Version 3.1 was not found` from `actions/setup-python`: pin a concrete Python minor version like `3.11` in the workflow (we now use `3.11`).
 
+Publishing to PyPI via "Release published"
+- There is now an **Upload Python Package on Release** workflow (`.github/workflows/upload-to-pypi-on-release.yml`) that will run when a GitHub Release is **published** (`type: published`).
+- Behavior:
+  - It builds `dist/` and uploads the distributions to a job-scoped artifact.
+  - It then downloads those artifacts in a separate job and uses `pypa/gh-action-pypi-publish` to publish the package to PyPI.
+  - The `pypi` environment is configured for the publishing job; we recommend protecting that environment and requiring approvals before allowing the job to run.
+  - The action will use the `PYPI_API_TOKEN` repository secret when present. Create a PyPI API token on https://pypi.org and add it as a repository secret `PYPI_API_TOKEN`.
+
 Notes:
 - Releases must be additive for v1 (no breaking changes). Any breaking change must be v2.
 - Ensure LICENSE file is included in distribution.

@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: imrabo-ai-sdk
-Version: 0.1.0
+Version: 1.0.0
 Summary: imrabo AI SDK — provider-agnostic invocation layer (Python)
 Author: ImRabo
 License-Expression: MIT
@@ -9,6 +9,9 @@ Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: httpx>=0.24.0
+Provides-Extra: docs
+Requires-Dist: mkdocs; extra == "docs"
+Requires-Dist: mkdocs-material; extra == "docs"
 Dynamic: license-file
 
 imrabo AI SDK (Python)

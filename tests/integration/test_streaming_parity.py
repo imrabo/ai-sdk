@@ -1,7 +1,7 @@
 import httpx
-from imrabo_ai_sdk.types import RuntimeConfig, GenerateRequest, Message
-from imrabo_ai_sdk.core.generate import generate
-from imrabo_ai_sdk.core.stream import stream
+from src.types import RuntimeConfig, GenerateRequest, Message
+from src.core.generate import generate
+from src.core.stream import stream
 
 
 def make_mock_client(monkeypatch, handler):
@@ -16,27 +16,29 @@ def make_mock_client(monkeypatch, handler):
 
 def test_generic_url_streaming_parity(monkeypatch):
     # generate returns JSON with output 'hello world'
-    def handler_generate(request):
-        if request.url.path.endswith("/api/generate") or request.url.path.endswith(
-            "/generate"
-        ):
-            return httpx.Response(200, json={"output": "hello world"})
-        # stream endpoint returns newline-separated tokens
-        body = b"hello\n world\nDONE\n"
-        return httpx.Response(200, content=body)
+    def handler(request):
+        if "stream" in str(request.url):
+            body = b"hello\n world\nDONE\n"
+            return httpx.Response(200, content=body)
 
-    make_mock_client(monkeypatch, handler_generate)
+        return httpx.Response(200, json={"output": "hello world"})
 
-    rc = RuntimeConfig(type="url", endpoint="http://example.com")
+    make_mock_client(monkeypatch, handler)
+
+    rc = RuntimeConfig(type="url", endpoint="http://example.com/api/generate")
     req = GenerateRequest(
         model="m", messages=[Message(role="user", content="test")], runtime=rc
+    )
+    rc_stream = RuntimeConfig(type="url", endpoint="http://example.com/api/stream")
+    req_stream = GenerateRequest(
+        model="m", messages=[Message(role="user", content="test")], runtime=rc_stream
     )
 
     # generate result
     gen = generate(req)
 
     # stream and reassemble tokens
-    toks = [c.value for c in stream(req) if c.type == "token"]
+    toks = [c.value for c in stream(req_stream) if c.type == "token"]
     assembled = "".join(toks)
 
     assert gen.output == "hello world"

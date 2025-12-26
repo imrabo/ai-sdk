@@ -1,6 +1,6 @@
 import pytest
-from imrabo_ai_sdk.providers.kernel import KernelProvider
-from imrabo_ai_sdk.types import InternalRequest, Message
+from src.providers.kernel import KernelProvider
+from src.types import InternalRequest, Message
 
 
 def test_kernel_generate_not_implemented():

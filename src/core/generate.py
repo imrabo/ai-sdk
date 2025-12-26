@@ -1,6 +1,6 @@
 from ..types import GenerateRequest, GenerateResult
 from ..normalize import normalize_request
-import imrabo_ai_sdk.config.resolve_provider as resolve_provider_module
+import src.config.resolve_provider as resolve_provider_module
 from ..capabilities import ensure_capabilities
 
 

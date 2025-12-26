@@ -1,1 +1,5 @@
 httpx>=0.24.0
+
+[docs]
+mkdocs
+mkdocs-material

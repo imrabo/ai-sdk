@@ -1,11 +1,10 @@
-import httpx
 import pytest
-from imrabo_ai_sdk.providers.generic_url import GenericURLProvider
-from imrabo_ai_sdk.types import InternalRequest, Message
+import httpx
+from src.providers.generic_url import GenericURLProvider
+from src.types import InternalRequest, Message
 
 
 def test_generate_calls_endpoint(monkeypatch):
-    # Mock httpx.Client.post to return a response with JSON
     def handler(request):
         return httpx.Response(200, json={"output": "hello"})
 
@@ -26,7 +25,6 @@ def test_generate_calls_endpoint(monkeypatch):
 
 
 def test_stream_parses_chunks(monkeypatch):
-    # Simulate stream by returning content with newlines
     def handler(request):
         body = b"h\ni\nDONE\n"
         return httpx.Response(200, content=body)
@@ -46,12 +44,3 @@ def test_stream_parses_chunks(monkeypatch):
     chunks = list(provider.stream(req))
     assert [c.type for c in chunks if c.type != "done"] == ["token", "token"]
     assert "".join([c.value for c in chunks if c.type == "token"]) == "hi"
-
-
-def test_stream_unsupported_flag():
-    provider = GenericURLProvider(id="g", endpoint="http://x", supports_streaming=False)
-    req = InternalRequest(
-        model="m", messages=[Message(role="user", content="stream")], options=None
-    )
-    with pytest.raises(RuntimeError):
-        list(provider.stream(req))

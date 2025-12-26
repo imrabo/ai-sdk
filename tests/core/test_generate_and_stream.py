@@ -1,16 +1,16 @@
 import pytest
-from imrabo_ai_sdk.core.generate import generate
-from imrabo_ai_sdk.core.stream import stream
-from imrabo_ai_sdk.types import (
+from src.core.generate import generate
+from src.core.stream import stream
+from src.types import (
     GenerateRequest,
     Message,
     GenerationOptions,
     StreamChunk,
     Capabilities,
 )
-from imrabo_ai_sdk.errors import UnsupportedCapabilityError
+from src.errors import UnsupportedCapabilityError
 
-import imrabo_ai_sdk.config.resolve_provider as resolver
+import src.config.resolve_provider as resolver
 
 
 class FakeProvider:

@@ -1,5 +1,5 @@
-from imrabo_ai_sdk.config.resolve_provider import resolve_provider
-from imrabo_ai_sdk.types import RuntimeConfig
+from src.config.resolve_provider import resolve_provider
+from src.types import RuntimeConfig
 
 
 def test_resolve_generic_url():

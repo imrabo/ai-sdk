@@ -1,7 +1,7 @@
 import pytest
-from imrabo_ai_sdk.validate import validate_messages, validate_generation_options
-from imrabo_ai_sdk.errors import SDKValidationError
-from imrabo_ai_sdk.types import Message, GenerationOptions
+from src.validate import validate_messages, validate_generation_options
+from src.errors import SDKValidationError
+from src.types import Message, GenerationOptions
 
 
 def test_validate_messages_empty():

@@ -1,6 +1,6 @@
 import httpx
-from imrabo_ai_sdk.providers.ollama import OllamaProvider
-from imrabo_ai_sdk.types import InternalRequest, Message
+from src.providers.ollama import OllamaProvider
+from src.types import InternalRequest, Message
 
 
 def test_ollama_generate(monkeypatch):

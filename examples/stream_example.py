@@ -1,5 +1,5 @@
-from imrabo_ai_sdk.types import GenerateRequest, Message, RuntimeConfig
-from imrabo_ai_sdk import stream
+from src.types import GenerateRequest, Message, RuntimeConfig
+from src import stream
 
 
 def main():

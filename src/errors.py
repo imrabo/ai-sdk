@@ -11,6 +11,12 @@ class SDKValidationError(SDKError):
         super().__init__(message, "sdk_validation_error")
 
 
+class ValidationError(SDKValidationError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+
 class UnsupportedCapabilityError(SDKError):
     provider: str | None
 
